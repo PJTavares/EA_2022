@@ -8,5 +8,6 @@ def outln(n):
     stdout.write("\n")
 
 
+#fsafa
 n = int(readln())
 outln(n)
