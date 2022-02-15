@@ -7,7 +7,6 @@ def outln(n):
     stdout.write(str(n))
     stdout.write("\n")
 
-
-#fsafa
-n = int(readln())
-outln(n)
+string = readln()
+first, second = string.split(' ')
+outln(int(first)*int(second))
