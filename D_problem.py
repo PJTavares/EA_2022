@@ -21,6 +21,7 @@ def outln(n):
     stdout.write(str(n))
     stdout.write("\n")
 
+
 class Node:
     def __init__(self,value):
         self.value = value
@@ -29,17 +30,28 @@ class Node:
 
     def insert_before(self,value):
         ins = Node(value)
+        if(self.prev == None):
+            self.prev = ins
+            ins.next = self
+            return
+
+        self.prev.next = ins
         ins.prev = self.prev
         self.prev = ins
         ins.next = self
-        print(ins.value)
 
     def insert_after(self,value):
         ins = Node(value)
+        if(self.next == None):
+            self.next = ins
+            ins.prev = self
+            return
+
+        self.next.prev = ins    
         ins.next = self.next
         self.next = ins
         ins.prev = self
-        print(ins.value)
+      
 
 class LinkedList:
     def __init__(self):
@@ -48,41 +60,40 @@ class LinkedList:
 
     def insert_back(self,value):
         self.head.insert_before(value)
-        print("HEAD VALUE: "+str(self.head.value))
-        print("Before VALUE: "+str(self.head.prev.value))
-
+        
     def insert_front(self,value):
         self.head.insert_after(value)
         
-        print("HEAD VALUE: "+str(self.head.value))
-        print("AFTER VALUE: "+str(self.head.next.value))
+    def printlist(self):
+        aux = self.head
+        while(aux.prev):
+            aux = aux.prev
+        
+        while aux:
+            outln(aux.value)
+            aux = aux.next
 
-    def pop_back(self):
-        pass
-    def pop_front(self):
-        pass
 
 lista = LinkedList()
-lista.insert_back(5)
-lista.insert_front(10)
 
-aux = lista.head
-while aux:
-    print(aux.value)
-    aux = aux.next
-
-
-'''
-l = list()
 while True:
     lido = readln()
     if(lido == ''):
         break
 
-    print(lido)
+    comandos = lido.split(' ')
 
-    
-for elem in l:
-    outln(elem)
-'''
+    if(comandos[0] == 'INSERT'):
+        if(comandos[1] == 'RIGHT'):
+            lista.insert_front(int(comandos[2]))
+        elif(comandos[1] == 'LEFT'):
+            lista.insert_back(int(comandos[2]))
 
+    elif (comandos[0] == 'MOVE'):
+        if(comandos[1] == 'RIGHT'):
+            lista.head = lista.head.next
+        elif(comandos[1] == 'LEFT'):
+            lista.head = lista.head.prev
+            
+
+lista.printlist()
