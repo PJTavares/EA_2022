@@ -45,14 +45,31 @@ int winter(int x,int y){
     }
     if(x == 0 || y == 0){
         DP[x][y] = board[x][y];
+        cout << DP[x][y] <<'\n';
         return DP[x][y];
     }
     DP[x][y] = std::max(winter(x-1,y),winter(x-1,y-1)) + board[x][y];
     return DP[x][y];
 }
 
+int bottomup(int num_cases){
+    DP[0][0] = board[0][0];
+    int aux,res = 0;
+    for(int i = 1;i<num_cases;i++){
+        for(int j = 0;j<i;j++){
+            DP[i][j] = std::max(DP[i-1][j],DP[i-1][j-1]) + board[i][j];   
+        }
+    }
+    for(int i = 0;i<num_cases;i++){
+        aux = DP[num_cases-1][i];
+        if(aux > res){
+            res = aux;
+        }
+    }
+    return res;
+}
 int main(){
-    int num_cases,num_rows,pos_i,pos_j,value;
+    int num_cases,num_rows,value;
     int lido,res = 0;
     cin >> num_cases;
     for(int i = 0;i<num_cases;i++){
@@ -66,13 +83,16 @@ int main(){
             }
         }
 
-        for(int aux = 0;aux-num_rows;aux++){
+        escreveVector(num_rows,num_rows);
+
+        for(int aux = 0;aux<num_rows;aux++){
             value = winter(num_rows-1,aux);
             cout << "OBTIDO: " << value << '\n';
             if(value > res){
                 res = value;
             }
         }
+       
         cout << "RESULTADO " << res << '\n';
     }
     
