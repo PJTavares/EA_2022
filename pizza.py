@@ -23,7 +23,6 @@ def pizza(times,media,num_pizzas):
         aux = []
         for j in range(media+1):
            aux.append(False)
-        
         DP.append(aux)
 
     for i in range(num_pizzas+1):
@@ -38,7 +37,12 @@ def pizza(times,media,num_pizzas):
             else:
                 DP[i+1][j] = DP[i][j] or DP[i][j-times[i]]
 
+    for j in range(media+1):
+        if(DP[num_pizzas][media-j]):
+            return media-j
+    return 0
         
+    
     '''
     for i in range(num_pizzas+1):
         out = ""
@@ -52,7 +56,6 @@ while True:
     num_pizzas = readln()
     if(num_pizzas == ''):
         break
-    print("NOVO CASO TESTE\n")
 
     times = []
     sum = 0
@@ -61,4 +64,6 @@ while True:
         times.append(lido)
         sum += lido
 
-    pizza(times,sum//2,int(num_pizzas))
+    aux = pizza(times,sum//2,int(num_pizzas))
+    out = sum - aux
+    outln(out-aux)

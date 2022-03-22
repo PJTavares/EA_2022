@@ -7,7 +7,32 @@
 using namespace std;
 std::vector<vector<int>> board;
 std::vector<vector<int>> DP;
+void resetVector(int rows){
+    board.resize(rows);
+    DP.resize(rows);
+    for(int aux = 0;aux<rows;aux++){
+        board[aux].resize(rows);
+        DP[aux].resize(rows);
+    }
 
+    for(int i = 0;i<rows;i++){
+        for(int j = 0;j<rows;j++){
+            board[i][j] = 0;
+            DP[i][j] = -1;
+        }
+    }
+}
+
+
+void escreveVector(int rows,int col){
+    for(int i = 0;i<rows;i++){
+        cout << "==== Linha " << i <<" ====\n";
+        for(int j = 0;j<col;j++){
+            cout << board[i][j]<<" ";
+        }
+        cout << "\n";
+    }
+}
 void resetVector(int rows){
     board.resize(rows);
     DP.resize(rows);
