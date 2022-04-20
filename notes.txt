@@ -1,0 +1,9 @@
+Pronto consultas o 4:
+Soma_filhos: 1 41
+Melhor_filhos: 0 0
+Consultas o 5:
+Soma_filhos: (1 41 + 1 29) 1 70
+Mellhro_filhos: 0 0
+Vais para o 1 depois:
+Usa: (1 54 + melhor_filhos) 1 54
+N usas: (Soma_filhos) 1 70

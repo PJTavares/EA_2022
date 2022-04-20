@@ -6,66 +6,71 @@
 
 using namespace std;
 
-std::vector<int> cores;
 std::vector<vector<int>> adj;
-
-int n,m,train1,train2;
+std::vector<int> cores;
 
 int BFS(int vertex){
+    int t;
     queue<int> myqueue;
     cores[vertex] = 1;
     myqueue.push(vertex);
 
+
     while(!myqueue.empty()){
-        int t = myqueue.front();
+        t = myqueue.front();
         myqueue.pop();
 
-        for(int i = 0 ; i < n ; i++){
-            if(adj[t][i] != 0){
-                if(cores[i] == 0){
-                    cores[i] = 1 - cores[t];
-                    myqueue.push(i);
-                }
-                else if(cores[i] == cores[t]){
-                    return 0;
-                }
+        for(int i: adj[t]){
+            if(cores[i] == -1){
+                cores[i] = 1 - cores[t];
+                myqueue.push(i);
             }
+            else if(cores[i] == cores[t]){
+                return 0;
+            }
+            
         }
     }
     return 1;
 }
 
-void makeVector(int n){
-    cores.resize(n);
-    adj.resize(n);
-    for(int i = 0 ; i < n ; i++){
-        adj[i].resize(n);
-    }
-
-    for(int i = 0 ; i < n ; i++){
-        for(int j = 0 ; j < n ; j++){
-            adj[i][j] = 0;
-        }
-    }
-}
-
 int main(){
     while(!std::cin.eof()){
+        int n,m,train1,train2;
+
         cin >> n >> m;
-        makeVector(n);
+        int wrong = 0;
+
+        adj.resize(n);
+        cores.resize(n);
+        for(int i = 0 ; i < n ; i++){
+            cores[i] = -1;
+        }
+
         for(int i = 0 ; i < m ; i++){
             cin >> train1 >> train2;
-            adj[train1-1][train2-1]+=1;
-            adj[train2-1][train1-1]+=1;
+            adj[train1-1].push_back(train2-1);
+            adj[train2-1].push_back(train1-1);
         }
         
-        if(BFS(0)){
-            cout << "NOT SURE\n";
+        for(int i = 0 ; i < n ; i++){
+            if(cores[i] == -1){
+                int result = BFS(i);
+                if(result == 0){
+                    wrong = 1;
+                    break;
+                }
+            }
+        }
+        if(wrong){
+            cout << "NO" << endl;
         }
         else{
-            cout << "NO\n";
+            cout << "NOT SURE" << endl;
         }       
 
+        adj.clear();
+        cores.clear();
     }
     return 0;
 }
