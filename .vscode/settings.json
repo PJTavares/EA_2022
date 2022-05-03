@@ -85,5 +85,6 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "queue": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
